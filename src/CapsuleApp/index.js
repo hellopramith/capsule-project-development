@@ -16,8 +16,7 @@ function CapsuleApp(currState, action) {
     return Object.assign({}, {
       screen: 'ChattingSection',
       username: currState.username,
-      messages: action.chatData.messages,
-      currentUser : action.chatData.currentUser
+      currentUser : action.chatData
     })
 
     default:

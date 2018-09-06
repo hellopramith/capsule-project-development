@@ -73,8 +73,26 @@ class ChattingSection extends Component {
         console.log('here')
         const currentUser = this.props.currentUser || {};
 
+        if(currentUser.subscribeToRoom){
+            currentUser.subscribeToRoom({
+                roomId: 15412514,
+                messageLimit: 100,
+                hooks: {
+                    onNewMessage: message => {
+                    this.setState({
+                        messages: [...this.state.messages, message],
+                    })
+                    },
+                    onUserCameOnline: () => this.forceUpdate(),
+                    onUserWentOffline: () => this.forceUpdate(),
+                    onUserJoined: () => this.forceUpdate()
+                }
+            })
+        }
+        console.log(currentUser)
+
         const users = currentUser ? currentUser.users : [];
-        const messages = this.props.messages || [];
+        const messages = this.state.messages || [];
         return (
             <React.Fragment>
                 <Grid container spacing={24}>
@@ -108,11 +126,9 @@ class ChattingSection extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        currentUser: state.currentUser,
-        messages: state.messages
-    }
-};
+const mapStateToProps = (state) => ({
+    messages: state.messages,
+    currentUser: state.currentUser
+});
 
 export default  connect(mapStateToProps) (ChattingSection);
