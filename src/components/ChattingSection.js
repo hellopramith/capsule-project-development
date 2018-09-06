@@ -51,9 +51,9 @@ class ChattingSection extends Component {
     }
 
     sendMessage(text) {
-        this.state.currentUser.sendMessage({
+        this.props.currentUser.sendMessage({
             text,
-            roomId: this.state.currentRoom.id
+            roomId: 15412514
         })
     }
 
@@ -62,37 +62,6 @@ class ChattingSection extends Component {
             type: 'GET_CHAT',
             userId: this.props.username
         });
-        
-        // const chatManager = new Chatkit.ChatManager({
-        //     instanceLocator: 'v1:us1:4b9830d2-44d5-464b-8a84-225ed473b5ba',
-        //     userId: this.props.username,
-        //     tokenProvider: new Chatkit.TokenProvider({
-        //         url: 'http://localhost:3001/authenticate'
-        //     })
-        // })
-
-        // chatManager.connect()
-        // .then(currentUser => {
-        //   this.setState({ currentUser })
-        //   return currentUser.subscribeToRoom({
-        //     roomId: 15412514,
-        //     messageLimit: 100,
-        //     hooks: {
-        //       onNewMessage: message => {
-        //         this.setState({
-        //           messages: [...this.state.messages, message],
-        //         })
-        //       },
-        //       onUserCameOnline: () => this.forceUpdate(),
-        //       onUserWentOffline: () => this.forceUpdate(),
-        //       onUserJoined: () => this.forceUpdate()
-        //     }
-        //   })
-        // })
-        // .then(currentRoom => {
-        //   this.setState({ currentRoom })
-        // })
-        // .catch(error => console.error('error', error))
     }
 
     createRoom(e) {
@@ -102,9 +71,10 @@ class ChattingSection extends Component {
 
     render() {
         console.log('here')
-        const currentUser = this.props.currentUser || this.state.currentUser;
+        const currentUser = this.props.currentUser || {};
+
         const users = currentUser ? currentUser.users : [];
-        const messages = this.props.messages || this.state.messages;
+        const messages = this.props.messages || [];
         return (
             <React.Fragment>
                 <Grid container spacing={24}>
@@ -138,10 +108,11 @@ class ChattingSection extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-    messages: state.messages,
-    currentRoom: state.currentRoom,
-    currentUser: state.currentUser
-});
+const mapStateToProps = (state) => {
+    return {
+        currentUser: state.currentUser,
+        messages: state.messages
+    }
+};
 
 export default  connect(mapStateToProps) (ChattingSection);

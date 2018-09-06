@@ -9,7 +9,6 @@ function* getUserName_(action) {
 
 function* getChat_(action) {
     const chatData = yield call(getChat, action.userId);
-    console.log(chatData);
     yield put({ type: 'SET_CHAT', chatData });
 }
 
