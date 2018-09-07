@@ -51,13 +51,23 @@ class ChattingSection extends Component {
     }
 
     sendMessage(text) {
+        console.log(text)
         this.props.currentUser.sendMessage({
             text,
             roomId: 15412514
         })
+
+        this.props.dispatch({
+            type: 'GET_CHAT',
+            userId: this.props.username
+        });
     }
 
     componentDidMount () {
+        this.props.dispatch({
+            type: 'GET_CURRENT_USER',
+            userId: this.props.username
+        });
         this.props.dispatch({
             type: 'GET_CHAT',
             userId: this.props.username
@@ -70,29 +80,9 @@ class ChattingSection extends Component {
     }
 
     render() {
-        console.log('here')
         const currentUser = this.props.currentUser || {};
-
-        if(currentUser.subscribeToRoom){
-            currentUser.subscribeToRoom({
-                roomId: 15412514,
-                messageLimit: 100,
-                hooks: {
-                    onNewMessage: message => {
-                    this.setState({
-                        messages: [...this.state.messages, message],
-                    })
-                    },
-                    onUserCameOnline: () => this.forceUpdate(),
-                    onUserWentOffline: () => this.forceUpdate(),
-                    onUserJoined: () => this.forceUpdate()
-                }
-            })
-        }
-        console.log(currentUser)
-
         const users = currentUser ? currentUser.users : [];
-        const messages = this.state.messages || [];
+        const messages = this.props.messages || [];
         return (
             <React.Fragment>
                 <Grid container spacing={24}>

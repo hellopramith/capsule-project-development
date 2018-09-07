@@ -13,11 +13,20 @@ function CapsuleApp(currState, action) {
       })
 
     case 'SET_CHAT':
-    return Object.assign({}, {
-      screen: 'ChattingSection',
-      username: currState.username,
-      currentUser : action.chatData
-    })
+      return Object.assign({}, {
+        screen: 'ChattingSection',
+        username: currState.username,
+        currentUser: currState.currentUser,
+        messages : action.messages
+      })
+
+    case 'SET_CURRENT_USER':
+      return Object.assign({}, {
+        screen: 'ChattingSection',
+        username: currState.username,
+        messages : currState.messages,
+        currentUser: action.currentUser
+      })
 
     default:
       return currState;
