@@ -44,7 +44,8 @@ class ChattingSection extends Component {
 
         this.state = {
             currentUser: {},
-            messages: []
+            messages: [],
+            update: true
         }
 
         this.sendMessage = this.sendMessage.bind(this);
@@ -59,17 +60,17 @@ class ChattingSection extends Component {
 
         this.props.dispatch({
             type: 'GET_CHAT',
-            userId: this.props.username
+            userId: this.props.currentUser
         });
+
+        this.setState({
+            update:true
+        })
     }
 
     componentDidMount () {
         this.props.dispatch({
             type: 'GET_CURRENT_USER',
-            userId: this.props.username
-        });
-        this.props.dispatch({
-            type: 'GET_CHAT',
             userId: this.props.username
         });
     }
@@ -83,6 +84,18 @@ class ChattingSection extends Component {
         const currentUser = this.props.currentUser || {};
         const users = currentUser ? currentUser.users : [];
         const messages = this.props.messages || [];
+
+        if(users && users.length && this.state.update === true){
+            this.props.dispatch({
+                type: 'GET_CHAT',
+                userId: this.props.currentUser
+            });
+
+            this.setState({
+                update:false
+            })
+        }
+
         return (
             <React.Fragment>
                 <Grid container spacing={24}>
