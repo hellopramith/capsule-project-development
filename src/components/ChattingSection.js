@@ -45,7 +45,9 @@ class ChattingSection extends Component {
         this.state = {
             currentUser: {},
             messages: [],
-            update: true
+            update: true,
+            newRoom: true,
+            roomId: 15412514
         }
 
         this.sendMessage = this.sendMessage.bind(this);
@@ -55,12 +57,13 @@ class ChattingSection extends Component {
         console.log(text)
         this.props.currentUser.sendMessage({
             text,
-            roomId: 15412514
+            roomId: this.props.roomId ?this.props.roomId : 15412514
         })
 
         this.props.dispatch({
             type: 'GET_CHAT',
-            userId: this.props.currentUser
+            roomId: this.props.roomId ?this.props.roomId : 15412514,
+            currentUser: this.props.currentUser
         });
 
         this.setState({
@@ -71,13 +74,22 @@ class ChattingSection extends Component {
     componentDidMount () {
         this.props.dispatch({
             type: 'GET_CURRENT_USER',
-            userId: this.props.username
+            currentUser: this.props.username
         });
+
+        this.setState({
+            newRoom:true
+        })
     }
 
     createRoom(e) {
         e.preventDefault();
-        alert('Functionality under development');
+        const roomName = window.prompt('Enter Room Name');
+        this.props.dispatch({
+            type: 'GET_CREATE_ROOM',
+            currentUser: this.props.currentUser,
+            roomName
+        });
     }
 
     render() {
@@ -85,15 +97,17 @@ class ChattingSection extends Component {
         const users = currentUser ? currentUser.users : [];
         const messages = this.props.messages || [];
 
-        if(users && users.length && this.state.update === true){
+        if(users && users.length && (this.state.update === true || this.state.newRoom === true ) ){
             this.props.dispatch({
                 type: 'GET_CHAT',
-                userId: this.props.currentUser
+                roomId: this.props.roomId ? this.props.roomId : 15412514,
+                currentUser: this.props.currentUser
             });
 
             this.setState({
-                update:false
-            })
+                update:false,
+                newRoom: false
+            });
         }
 
         return (
@@ -131,7 +145,8 @@ class ChattingSection extends Component {
 
 const mapStateToProps = (state) => ({
     messages: state.messages,
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    roomId: state.roomId
 });
 
 export default  connect(mapStateToProps) (ChattingSection);
