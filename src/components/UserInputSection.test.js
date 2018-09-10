@@ -1,0 +1,24 @@
+const ReactDom = require('react-dom');
+const Enzyme = require('enzyme');
+const { mount, configure, shallow, render } = require('enzyme');
+const Adapter = require('enzyme-adapter-react-16');
+const { expect } = require('chai');
+
+Enzyme.configure({
+    adapter: new Adapter()
+});
+
+it('Renders the component', () => {
+    const div = document.createElement('div');
+
+    ReactDom.render('<UserInputSection />', div);
+    ReactDom.unmountComponentAtNode(div);
+});
+
+describe("<UserInputSection />", function() {
+    it('Should Render login <UserInputSection /> component', () => {
+        const UserInputSection = shallow('<UserInputSection />');
+
+        expect(UserInputSection.find('section')).to.have.length(1);
+    });
+  });
