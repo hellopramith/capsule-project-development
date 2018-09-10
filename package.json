@@ -30,7 +30,7 @@
   },
   "scripts": {
     "serve": "concurrently \"react-scripts start\" \"json-server -p 3001 -w db.json\"",
-    "start": "concurrently \"node ./server.js\" \"react-scripts start\"",
+    "start": "json-server -s build -H 0.0.0.0 -p $PORT -w db.json",
     "test": "CI=true react-scripts test --env=jsdom",
     "build": "react-scripts build",
     "postinstall": "react-scripts build",
