@@ -44,7 +44,7 @@ class UserInputSection extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-        this.state.loader = true;
+        this.setState({ loader: true });
         this.props.onSubmit(this.state.username);
     }
 

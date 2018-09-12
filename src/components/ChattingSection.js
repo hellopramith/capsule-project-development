@@ -9,7 +9,6 @@ import Chat from '@material-ui/icons/Chat';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import Chatkit from '@pusher/chatkit';
 
 const styles = {
     chatWindow : {
