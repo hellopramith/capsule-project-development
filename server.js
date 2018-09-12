@@ -13,7 +13,7 @@ const chatkit = new Chatkit.default({
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cors())
-app.post('/users', (req, res) => {
+app.post(process.env.PORT + '/users', (req, res) => {
   const { username } = req.body
   chatkit
   .createUser({ 
@@ -30,12 +30,12 @@ app.post('/users', (req, res) => {
     })
 })
 
-app.post('/authenticate', (req, res) => {
+app.post(process.env.PORT + '/authenticate', (req, res) => {
   const authData = chatkit.authenticate({ userId: req.query.user_id })
   res.status(authData.status).send(authData.body)
 })
 
-const PORT =  process.env.PORT || 3001;
+const PORT =  process.env.PORT;
 app.listen(PORT, err => {
   if (err) {
     console.error(err)
