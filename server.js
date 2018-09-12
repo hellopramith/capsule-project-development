@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cors())
 
-app.post('/users', (req, res) => {
+app.post('https://capsule-project-development.herokuapp.com/users', (req, res) => {
   const { username } = req.body
   chatkit
   .createUser({ 
@@ -23,7 +23,7 @@ app.post('/users', (req, res) => {
   })
   .then(() => res.sendStatus(201))
   .catch(error => {
-    if (error.error_type === 'services/chatkit/user_already_exists') {
+    if (error.error_type === 'https://capsule-project-development.herokuapp.com/services/chatkit/user_already_exists') {
       res.sendStatus(200)
       } else {
         res.status(error.status).json(error)
@@ -36,7 +36,7 @@ app.post('/authenticate', (req, res) => {
   res.status(authData.status).send(authData.body)
 })
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, err => {
   if (err) {
     console.error(err)

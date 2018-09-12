@@ -2,7 +2,7 @@ import axios from 'axios';
 import Chatkit from '@pusher/chatkit';
 
 export function getUserName(username) {
-    return axios.post('/users',{ username }).then(result => new Promise((resolve, reject) => {
+    return axios.post('https://capsule-project-development.herokuapp.com/users',{ username }).then(result => new Promise((resolve, reject) => {
         resolve(username);
     })).catch(error => {return username})
 }
@@ -40,7 +40,7 @@ export function getCurrentUser(username) {
         instanceLocator: 'v1:us1:4b9830d2-44d5-464b-8a84-225ed473b5ba',
         userId: username,
         tokenProvider: new Chatkit.TokenProvider({
-            url: '/authenticate'
+            url: 'https://capsule-project-development.herokuapp.com/authenticate'
         })
     }).connect().then(currentUser => new Promise((resolve, reject) => {
         resolve(currentUser)
