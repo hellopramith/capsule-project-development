@@ -10,10 +10,18 @@ const chatkit = new Chatkit.default({
   key: 'c77f1540-82fa-4d36-9a6e-3c6fa25788e2:CMLQzqBohxdsz2qDexQWeqylSe5toR0GwySWIlBID10=',
 })
 
+const PORT =  process.env.PORT || 3001;
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cors())
-app.post(process.env.PORT + '/users', (req, res) => {
+app.post('/users', (req, res) => {
   const { username } = req.body
   chatkit
   .createUser({ 
@@ -30,12 +38,11 @@ app.post(process.env.PORT + '/users', (req, res) => {
     })
 })
 
-app.post(process.env.PORT + '/authenticate', (req, res) => {
+app.post('/authenticate', (req, res) => {
   const authData = chatkit.authenticate({ userId: req.query.user_id })
   res.status(authData.status).send(authData.body)
 })
 
-const PORT =  process.env.PORT;
 app.listen(PORT, err => {
   if (err) {
     console.error(err)
