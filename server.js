@@ -16,6 +16,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cors())
 
+app.use(express.static(__dirname + '/build'));
+
+
 app.post('/users', (req, res) => {
   const { username } = req.body
   chatkit

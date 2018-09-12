@@ -30,11 +30,10 @@
     "concurrently": "^3.5.1"
   },
   "scripts": {
-    "serve": "concurrently \"react-scripts start\" \"json-server -p $PORT -w db.json\"",
-    "start": "json-server -s build -H 0.0.0.0 -p $PORT -w db.json",
-    "test": "CI=true react-scripts test --env=jsdom",
+    "start": "concurrently \"node ./server.js\" \"react-scripts start\"",
     "build": "react-scripts build",
     "postinstall": "react-scripts build",
+    "test": "CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "engines": {
