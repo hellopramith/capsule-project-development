@@ -10,6 +10,8 @@ const chatkit = new Chatkit.default({
   key: 'c77f1540-82fa-4d36-9a6e-3c6fa25788e2:CMLQzqBohxdsz2qDexQWeqylSe5toR0GwySWIlBID10=',
 })
 
+const PORT =  process.env.PORT || 3001;
+
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cors())
@@ -38,6 +40,7 @@ app.post('/authenticate', (req, res) => {
 })
 
 const PORT = 3001;
+
 app.listen(PORT, err => {
   if (err) {
     console.error(err)
