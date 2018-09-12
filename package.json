@@ -29,7 +29,8 @@
     "concurrently": "^3.5.1"
   },
   "scripts": {
-    "start": "node server.js",
+    "serve": "concurrently \"react-scripts start\" \"json-server -p $PORT -w db.json\"",
+    "start": "concurrently \"node ./server.js\" \"react-scripts start\"",
     "test": "CI=true react-scripts test --env=jsdom",
     "build": "react-scripts build",
     "postinstall": "react-scripts build",
