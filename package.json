@@ -29,11 +29,14 @@
     "concurrently": "^3.5.1"
   },
   "scripts": {
-    "serve": "concurrently \"react-scripts start\" \"json-server -p $PORT -w db.json\"",
-    "start": "json-server -s build -H 0.0.0.0 -p $PORT -w db.json",
+    "start": "concurrently \"node ./server.js\" \"react-scripts start\"",
     "test": "CI=true react-scripts test --env=jsdom",
     "build": "react-scripts build",
     "postinstall": "react-scripts build",
     "eject": "react-scripts eject"
+  },
+  "engines": {
+    "node": "v8.11.3",
+    "npm": "6.2.0"
   }
 }

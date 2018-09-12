@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cors())
 
-app.post('http://localhost:3001/users', (req, res) => {
+app.post('/users', (req, res) => {
   const { username } = req.body
   chatkit
   .createUser({ 
@@ -32,12 +32,12 @@ app.post('http://localhost:3001/users', (req, res) => {
     })
 })
 
-app.post('http://localhost:3001/authenticate', (req, res) => {
+app.post('/authenticate', (req, res) => {
   const authData = chatkit.authenticate({ userId: req.query.user_id })
   res.status(authData.status).send(authData.body)
 })
 
-const PORT =  process.env.PORT || 3001;
+const PORT = 3001;
 app.listen(PORT, err => {
   if (err) {
     console.error(err)
