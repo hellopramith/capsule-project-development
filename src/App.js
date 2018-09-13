@@ -13,8 +13,8 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      username: '',
-      screen: '',
+      username: localStorage.getItem('username') || '',
+      screen: localStorage.getItem('screen') || '',
       currentUser: {},
       messages: []
     }
@@ -29,8 +29,14 @@ class App extends Component {
   }
 
   render() {
-    const screen_ = this.props.screen || '';
-    const username_ = this.props.username || '';
+    const screen_ = this.props.screen || this.state.screen;
+    const username_ = this.props.username || this.state.username;
+
+    if(screen_ && username_){
+      localStorage.setItem('username', username_);
+      localStorage.setItem('screen', screen_);
+    }
+
     if (screen_ === '') {
       return <UserInputSection onSubmit={this.onUserEntry} />
     }
