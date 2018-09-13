@@ -40,7 +40,7 @@ function CapsuleApp(currState, action) {
         username: currState.username,
         currentUser: currState.currentUser,
         messages: [{
-          text: 'NEW ROOM',
+          text: 'Welcome to the new chat room -' + action.room.name,
           senderId: ''
         }],
         roomId: action.room.id

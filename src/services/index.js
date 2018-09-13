@@ -49,6 +49,10 @@ export function getCurrentUser(username) {
             currentUser.joinRoom({ roomId: 16070852 })
             .then(room => {
                 console.log(`Joined room with ID: ${room.id}`)
+                currentUser.messages = [{
+                    text: 'Welcome to the new chat room -' + room.name,
+                    senderId: ''
+                }]
                 resolve(currentUser)
             })
             .catch(err => {
