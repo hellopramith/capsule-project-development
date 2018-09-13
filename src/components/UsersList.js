@@ -37,6 +37,7 @@ const styles = {
     color: '#2196f3'
   },
   loader : {
+    display: 'none',
     paddingTop: '130px',
     textAlign: 'center'
   }
@@ -66,6 +67,8 @@ class UsersList extends Component {
           )
         })}
       </List></div>
+    } else {
+      return <div style={styles.loader}><CircularProgress style={styles.blue} /></div>
     }
   }
 }
