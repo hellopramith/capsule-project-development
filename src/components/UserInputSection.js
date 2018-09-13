@@ -13,16 +13,19 @@ const styles = {
         padding: '50px',
         border: '3px solid #2196f3',
         borderRadius: '30px',
-        height: '240px'
+        boxSizing: 'border-box'
     },
     button : {
         background: '#2196f3',
         color: '#fff'
     },
-    logo : {
-        fontSize: '50px',
+    logoText : {
+        fontSize: '32px',
         color: '#2196f3',
-        margin: '0 0 60px'
+    },
+    logo : {
+        fontSize: '32px',
+        color: '#2196f3'
     },
     blue : {
         color: '#2196f3'
@@ -68,7 +71,7 @@ class UserInputSection extends Component {
     render() {
         if (this.state.loader) {
             return <section style={styles.section}>
-                <Typography variant="title" style={styles.logo} color="inherit">capsule-chat <Chat style={styles.logo}/></Typography>
+                <Typography variant="title" style={styles.logoText} color="inherit">capsule-chat <Chat style={styles.logo}/></Typography>
                 <div style={styles.loader}><CircularProgress style={styles.blue} /></div>
             </section>
         } else {
