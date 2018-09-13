@@ -23,7 +23,7 @@ function CapsuleApp(currState, action) {
         currentUser: currState.currentUser,
         roomId: currState.roomId || 16070852,
         messages : action.messages.length ? action.messages :[{
-          text: 'Welcome to the new chat room -' + '',
+          text: 'Welcome to the new chat room -',
           senderId: ''
         }]
       })
