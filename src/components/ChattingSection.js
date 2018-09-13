@@ -6,6 +6,7 @@ import SendMessageForm from './SendMessageForm';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
+import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
 import Chat from '@material-ui/icons/Chat';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
@@ -22,6 +23,10 @@ const styles = {
     button : {
         background: '#2196f3',
         color: '#fff',
+        marginBottom: '12px'
+    },
+    buttonLogout : {
+        color: '#f50057',
         marginBottom: '12px'
     },
     logo : {
@@ -51,6 +56,13 @@ class ChattingSection extends Component {
         }
 
         this.sendMessage = this.sendMessage.bind(this);
+    }
+
+    logOut(e) {
+        e.preventDefault();
+        localStorage.removeItem('username');
+        localStorage.removeItem('screen');
+        window.location.reload();
     }
 
     sendMessage(text) {
@@ -131,6 +143,10 @@ class ChattingSection extends Component {
                         <Button style={styles.button} onClick={this.createRoom.bind(this)} variant="extendedFab" aria-label="Create Room">
                             <AddIcon />
                             Create Room
+                        </Button>
+                        <Button style={styles.buttonLogout} onClick={this.logOut.bind(this)}>
+                            <PowerSettingsNew />
+                            Logout
                         </Button>
                         <RoomsList
                             currentRoomId={this.props.roomId}
