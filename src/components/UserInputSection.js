@@ -29,6 +29,14 @@ const styles = {
     },
     loader : {
         textAlign: 'center'
+    },
+    error : {
+        position: 'absolute',
+        color: '#fff',
+        background: 'red',
+        padding: '0 5px',
+        fontFamily: 'sans-serif',
+        fontSize: '12px'
     }
 }
 
@@ -38,14 +46,19 @@ class UserInputSection extends Component {
 
         this.state = {
             username: '',
-            loader: false
+            loader: false,
+            error: false
         }
     }
 
     onSubmit(e) {
         e.preventDefault();
-        this.setState({ loader: true });
-        this.props.onSubmit(this.state.username);
+        if(this.state.username.replace(/\s/g,'') === ''){
+            this.setState({ error: true });
+        } else {
+            this.setState({ loader: true, error: false });
+            this.props.onSubmit(this.state.username);
+        }
     }
 
     onChange(e) {
@@ -69,6 +82,7 @@ class UserInputSection extends Component {
                             onChange={this.onChange.bind(this)}
                             margin="normal"
                             />
+                            {this.state.error ? <div style={styles.error}>Please enter username</div> : ''}
                             <Button style={styles.button} onClick={this.onSubmit.bind(this)} variant="outlined" color="primary" >
                                 Submit
                             </Button> 
