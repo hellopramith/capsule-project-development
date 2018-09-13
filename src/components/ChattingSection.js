@@ -106,12 +106,12 @@ class ChattingSection extends Component {
 
     onRoomUpdate(id){
         this.setState({
-            roomId : parseInt(id) || 16070852,
+            roomId : parseInt(id,10) || 16070852,
         });
 
         this.props.dispatch({
             type: 'GET_CHAT',
-            roomId: parseInt(id) || 16070852,
+            roomId: parseInt(id,10) || 16070852,
             currentUser: this.props.currentUser,
         });
     }
