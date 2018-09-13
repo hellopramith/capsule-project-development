@@ -52,7 +52,7 @@ class RoomsList extends Component {
 
   render() {
     if (this.props.rooms) {
-      return  <div>Room List<List component="nav"  style={styles.userList}>
+      return  <div><Typography>Room List</Typography><List component="nav"  style={styles.userList}>
         {this.props.rooms.map((room, index) => {
           if (room.id === this.props.currentRoomId) {
             return (
