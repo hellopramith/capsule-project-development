@@ -11,7 +11,7 @@ export function getChat(action) {
     return action.currentUser.fetchMessages({
         roomId: action.roomId,
         direction: 'older',
-        limit: 10,
+        limit: 6,
     })
     .then(messages => new Promise((resolve, reject) => {
         resolve(messages)
@@ -24,7 +24,7 @@ export function getChat(action) {
 export function getCreateRoom(action) {
     return action.currentUser.createRoom({
         name: action.roomName,
-        private: true
+        private: false
     })
     .then(room => new Promise((resolve, reject) => {
         alert(`Created room called ${room.name}`);
@@ -43,6 +43,18 @@ export function getCurrentUser(username) {
             url: '/authenticate'
         })
     }).connect().then(currentUser => new Promise((resolve, reject) => {
-        resolve(currentUser)
+        if(currentUser.users.length > 0){
+            resolve(currentUser)
+        } else {
+            currentUser.joinRoom({ roomId: 15412514 })
+            .then(room => {
+                console.log(`Joined room with ID: ${room.id}`)
+                resolve(currentUser)
+            })
+            .catch(err => {
+                console.log(`Error joining room ${err}`)
+            })
+        }
+        
     })).catch(error => console.error('error', error))
 }
