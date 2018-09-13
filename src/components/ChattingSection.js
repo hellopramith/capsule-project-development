@@ -104,6 +104,19 @@ class ChattingSection extends Component {
         });
     }
 
+    onRoomUpdate(id){
+        this.setState({
+            roomId : parseInt(id) || 16070852,
+            loader: true
+        });
+
+        this.props.dispatch({
+            type: 'GET_CHAT',
+            roomId: parseInt(id) || 16070852,
+            currentUser: this.props.currentUser
+        });
+    }
+
     render() {
         const currentUser = this.props.currentUser || {};
         const users = currentUser ? currentUser.users : [];
@@ -149,6 +162,7 @@ class ChattingSection extends Component {
                             Logout
                         </Button>
                         <RoomsList
+                            onRoomUpdate = {this.onRoomUpdate.bind(this)}
                             currentRoomId={this.props.roomId}
                             rooms={rooms}
                         />

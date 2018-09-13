@@ -18,16 +18,28 @@ function CapsuleApp(currState, action) {
 
     case 'SET_CHAT':
       return Object.assign({}, {
-        screen: 'ChattingSection',
+        screen: currState.screen,
         username: currState.username,
         currentUser: currState.currentUser,
         roomId: currState.roomId || 16070852,
-        messages : action.messages
+        messages : action.messages.length ? action.messages :[{
+          text: 'Welcome to the new chat room -' + '',
+          senderId: ''
+        }]
+      })
+    
+      case 'GET_CHAT':
+      return Object.assign({}, {
+        screen: currState.screen,
+        username: currState.username,
+        currentUser: currState.currentUser,
+        roomId: action.roomId || 16070852,
+        messages : currState.messages
       })
 
     case 'SET_CURRENT_USER':
       return Object.assign({}, {
-        screen: 'ChattingSection',
+        screen: currState.screen,
         username: currState.username,
         messages : currState.messages,
         roomId: currState.roomId || 16070852,
@@ -36,7 +48,7 @@ function CapsuleApp(currState, action) {
 
     case 'SET_CREATE_ROOM':
       return Object.assign({}, {
-        screen: 'ChattingSection',
+        screen: currState.screen,
         username: currState.username,
         currentUser: currState.currentUser,
         messages: [{

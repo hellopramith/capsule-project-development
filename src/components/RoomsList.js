@@ -44,23 +44,29 @@ const styles = {
 
 class RoomsList extends Component {
 
+  switchRoom(e) {
+    e.preventDefault();
+    const id = e.target.dataset.id;
+    this.props.onRoomUpdate(id);
+  }
+
   render() {
     if (this.props.rooms) {
       return  <div>Room List<List component="nav"  style={styles.userList}>
         {this.props.rooms.map((room, index) => {
           if (room.id === this.props.currentRoomId) {
             return (
-              <ListItem style={styles.highlighted} key={room.id} button>
-                <ListItemText primary={
-                  <Typography style={styles.white}>{room.name}</Typography>
+              <ListItem style={styles.highlighted} key={room.id} button data-id={room.id} onClick={this.switchRoom.bind(this)}>
+                <ListItemText data-id={room.id}  primary={
+                  <Typography data-id={room.id}  style={styles.white}>{room.name}</Typography>
                   }/>
               </ListItem>
             )
           }
           return (
-            <ListItem style={styles.list}  key={room.id} button>
-                <ListItemText primary={
-                  <Typography style={styles.blue}>{room.name}</Typography>
+            <ListItem style={styles.list}  key={room.id} button data-id={room.id} onClick={this.switchRoom.bind(this)}>
+                <ListItemText data-id={room.id}  primary={
+                  <Typography data-id={room.id}  style={styles.blue}>{room.name}</Typography>
                   }/>
               </ListItem>
           )
