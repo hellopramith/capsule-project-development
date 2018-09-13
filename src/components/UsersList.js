@@ -66,8 +66,6 @@ class UsersList extends Component {
           )
         })}
       </List></div>
-    } else {
-      return <div style={styles.loader}><CircularProgress style={styles.blue} /></div>
     }
   }
 }
