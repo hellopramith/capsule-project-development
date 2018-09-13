@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ChatWindow from './ChatWindow';
 import UsersList from './UsersList';
+import RoomsList from './RoomsList';
 import SendMessageForm from './SendMessageForm';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -46,7 +47,7 @@ class ChattingSection extends Component {
             messages: [],
             update: true,
             newRoom: true,
-            roomId: 15412514
+            roomId: 15824474
         }
 
         this.sendMessage = this.sendMessage.bind(this);
@@ -56,12 +57,12 @@ class ChattingSection extends Component {
         console.log(text)
         this.props.currentUser.sendMessage({
             text,
-            roomId: this.props.roomId ?this.props.roomId : 15412514
+            roomId: this.props.roomId ?this.props.roomId : 15824474
         })
 
         this.props.dispatch({
             type: 'GET_CHAT',
-            roomId: this.props.roomId ?this.props.roomId : 15412514,
+            roomId: this.props.roomId ?this.props.roomId : 15824474,
             currentUser: this.props.currentUser
         });
 
@@ -95,11 +96,12 @@ class ChattingSection extends Component {
         const currentUser = this.props.currentUser || {};
         const users = currentUser ? currentUser.users : [];
         const messages = this.props.messages || [];
+        const rooms = currentUser ? currentUser.rooms : [];
 
         if(users && users.length && (this.state.update === true || this.state.newRoom === true ) ){
             this.props.dispatch({
                 type: 'GET_CHAT',
-                roomId: this.props.roomId ? this.props.roomId : 15412514,
+                roomId: this.props.roomId ? this.props.roomId : 15824474,
                 currentUser: this.props.currentUser
             });
 
@@ -130,7 +132,10 @@ class ChattingSection extends Component {
                             <AddIcon />
                             Create Room
                         </Button>
-
+                        <RoomsList
+                            currentRoomId={this.props.roomId}
+                            rooms={rooms}
+                        />
                         <UsersList
                             currentUser={currentUser}
                             users={users}

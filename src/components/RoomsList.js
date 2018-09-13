@@ -42,34 +42,35 @@ const styles = {
   }
 }
 
-class UsersList extends Component {
+class RoomsList extends Component {
 
   render() {
-    if (this.props.users) {
-      return  <div>User List<List component="nav"  style={styles.userList}>
-        {this.props.users.map((user, index) => {
-          if (user.id === this.props.currentUser.id) {
+    if (this.props.rooms) {
+      return  <div>Room List<List component="nav"  style={styles.userList}>
+        {this.props.rooms.map((room, index) => {
+          if (room.id === this.props.currentRoomId) {
             return (
-              <ListItem style={styles.highlighted} key={user.id} button>
+              <ListItem style={styles.highlighted} key={room.id} button>
                 <ListItemText primary={
-                  <Typography style={styles.white}>{user.name}</Typography>
+                  <Typography style={styles.white}>{room.name}</Typography>
                   }/>
               </ListItem>
             )
           }
           return (
-            <ListItem style={styles.list}  key={user.id} button>
+            <ListItem style={styles.list}  key={room.id} button>
                 <ListItemText primary={
-                  <Typography style={styles.blue}>{user.name}</Typography>
+                  <Typography style={styles.blue}>{room.name}</Typography>
                   }/>
               </ListItem>
           )
         })}
-      </List></div>
+      </List>
+      </div>
     } else {
       return <div style={styles.loader}><CircularProgress style={styles.blue} /></div>
     }
   }
 }
 
-export default UsersList;
+export default RoomsList;
