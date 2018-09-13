@@ -47,7 +47,7 @@ class ChattingSection extends Component {
             messages: [],
             update: true,
             newRoom: true,
-            roomId: 15824474
+            roomId: 16070852
         }
 
         this.sendMessage = this.sendMessage.bind(this);
@@ -57,12 +57,12 @@ class ChattingSection extends Component {
         console.log(text)
         this.props.currentUser.sendMessage({
             text,
-            roomId: this.props.roomId ?this.props.roomId : 15824474
+            roomId: this.props.roomId ?this.props.roomId : 16070852
         })
 
         this.props.dispatch({
             type: 'GET_CHAT',
-            roomId: this.props.roomId ?this.props.roomId : 15824474,
+            roomId: this.props.roomId ?this.props.roomId : 16070852,
             currentUser: this.props.currentUser
         });
 
@@ -101,7 +101,7 @@ class ChattingSection extends Component {
         if(users && users.length && (this.state.update === true || this.state.newRoom === true ) ){
             this.props.dispatch({
                 type: 'GET_CHAT',
-                roomId: this.props.roomId ? this.props.roomId : 15824474,
+                roomId: this.props.roomId ? this.props.roomId : 16070852,
                 currentUser: this.props.currentUser
             });
 

@@ -4,7 +4,7 @@ function CapsuleApp(currState, action) {
     case 'GET_USERNAME':
     return Object.assign({}, {
       username: action.username,
-      roomId: currState.roomId || 15824474,
+      roomId: currState.roomId || 16070852,
     })
 
     case 'SET_USERNAME':
@@ -12,7 +12,7 @@ function CapsuleApp(currState, action) {
         screen: 'ChattingSection',
         username: action.username,
         messages: [],
-        roomId: currState.roomId || 15824474,
+        roomId: currState.roomId || 16070852,
         currentUser : {}
       })
 
@@ -21,7 +21,7 @@ function CapsuleApp(currState, action) {
         screen: 'ChattingSection',
         username: currState.username,
         currentUser: currState.currentUser,
-        roomId: currState.roomId || 15824474,
+        roomId: currState.roomId || 16070852,
         messages : action.messages
       })
 
@@ -30,7 +30,7 @@ function CapsuleApp(currState, action) {
         screen: 'ChattingSection',
         username: currState.username,
         messages : currState.messages,
-        roomId: currState.roomId || 15824474,
+        roomId: currState.roomId || 16070852,
         currentUser: action.currentUser
       })
 
