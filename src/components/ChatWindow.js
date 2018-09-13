@@ -43,7 +43,7 @@ class ChatWindow extends Component {
                     {this.props.messages.map((message, index) => (
                     <li style={ (index % 2 === 0) ? styles.even : styles.odd} key={index}>
                         <Paper style={styles.paper} >
-                            <span style={styles.username}>{message.senderId}</span>-
+                            <span style={styles.username}>{message.senderId}</span>
                             <p style={styles.message}>{message.text}</p>
                         </Paper>
                     </li>
