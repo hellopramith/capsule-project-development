@@ -56,9 +56,9 @@ class RoomsList extends Component {
         {this.props.rooms.map((room, index) => {
           if (room.id === this.props.currentRoomId) {
             return (
-              <ListItem style={styles.highlighted} key={room.id} button data-id={room.id} onClick={this.switchRoom.bind(this)}>
-                <ListItemText data-id={room.id}  primary={
-                  <Typography data-id={room.id}  style={styles.white}>{room.name}</Typography>
+              <ListItem style={styles.highlighted} key={room.id} button>
+                <ListItemText primary={
+                  <Typography style={styles.white}>{room.name}</Typography>
                   }/>
               </ListItem>
             )
