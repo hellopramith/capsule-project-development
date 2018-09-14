@@ -14,7 +14,7 @@ import {connect} from 'react-redux';
 
 const styles = {
     chatWindow : {
-        background: '#dff1ff',
+        background: '#fff',
         height: '515px',
         overflowY: 'auto',
         border: '1px solid #ddd',
