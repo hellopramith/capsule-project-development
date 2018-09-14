@@ -8,13 +8,13 @@ const styles = {
         padding: '10px'
     },
     even : {
-        marginRight: '10px',
+        marginRight: '30px',
         borderBottom: '1px solid #ddd',
         listStyle: 'none',
         marginBottom: '10px'
     },
     odd : {
-        marginLeft: '10px',
+        marginLeft: '30px',
         borderBottom: '1px solid #ddd',
         listStyle: 'none',
         marginBottom: '10px'
@@ -41,7 +41,7 @@ class ChatWindow extends Component {
             <div>
                 <ul>
                     {this.props.messages.map((message, index) => (
-                    <li style={ (index % 2 === 0) ? styles.even : styles.odd} key={index}>
+                    <li style={ (message.senderId === this.props.currentUserId) ? styles.odd : styles.even} key={index}>
                         <Paper style={styles.paper} >
                             <span style={styles.username}>{message.senderId}</span>
                             <p style={styles.message}>{message.text}</p>

@@ -121,7 +121,7 @@ class ChattingSection extends Component {
         const users = currentUser ? currentUser.users : [];
         const messages = this.props.messages || [];
         const rooms = currentUser ? currentUser.rooms : [];
-
+        const currentUserId = currentUser ? currentUser.id : '';
         if(users && users.length && (this.state.update === true || this.state.newRoom === true ) ){
             this.props.dispatch({
                 type: 'GET_CHAT',
@@ -142,6 +142,7 @@ class ChattingSection extends Component {
                     <Grid item xs={8}>
                         <div  ref='scroll' style={styles.chatWindow}>
                             <ChatWindow
+                                currentUserId = {currentUserId}
                                 messages={messages}
                             />
                         </div>
