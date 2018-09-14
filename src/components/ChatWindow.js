@@ -4,7 +4,13 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = {
     paper : {
-        background: '#fff',
+        background: '#e8eff9',
+        color: '#0c21a9c4',
+        padding: '10px'
+    },
+    paperShade : {
+        background: '#c6ddfb',
+        color: '#0c21a9c4',
         padding: '10px'
     },
     even : {
@@ -42,7 +48,7 @@ class ChatWindow extends Component {
                 <ul>
                     {this.props.messages.map((message, index) => (
                     <li style={ (message.senderId === this.props.currentUserId) ? styles.odd : styles.even} key={index}>
-                        <Paper style={styles.paper} >
+                        <Paper style={ (message.senderId === this.props.currentUserId) ? styles.paperShade : styles.paper} >
                             <span style={styles.username}>{message.senderId}</span>
                             <p style={styles.message}>{message.text}</p>
                         </Paper>
