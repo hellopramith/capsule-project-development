@@ -7,20 +7,6 @@ export function getUserName(username) {
     })).catch(error => {return username})
 }
 
-export function getChat(action) {
-    return action.currentUser.fetchMessages({
-        roomId: action.roomId,
-        direction: 'older',
-        limit: 6,
-    })
-    .then(messages => new Promise((resolve, reject) => {
-        resolve(messages)
-    })
-    .catch(err => {
-        console.log(`Error fetching messages: ${err}`)
-    }))
-}
-
 export function getCreateRoom(action) {
     return action.currentUser.createRoom({
         name: action.roomName,

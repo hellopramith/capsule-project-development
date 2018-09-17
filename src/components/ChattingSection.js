@@ -49,9 +49,11 @@ class ChattingSection extends Component {
 
         this.state = {
             currentUser: {},
-            messages: [],
+            messages: [{
+                text: 'Welcome to the new chat room -',
+                senderId: ''
+            }],
             update: true,
-            newRoom: true,
             roomId: 16070852
         }
 
@@ -66,20 +68,9 @@ class ChattingSection extends Component {
     }
 
     sendMessage(text) {
-        console.log(text)
         this.props.currentUser.sendMessage({
             text,
             roomId: this.props.roomId ?this.props.roomId : 16070852
-        })
-
-        this.props.dispatch({
-            type: 'GET_CHAT',
-            roomId: this.props.roomId ?this.props.roomId : 16070852,
-            currentUser: this.props.currentUser
-        });
-
-        this.setState({
-            update:true
         })
     }
 
@@ -88,50 +79,67 @@ class ChattingSection extends Component {
             type: 'GET_CURRENT_USER',
             currentUser: this.props.username
         });
-
-        this.setState({
-            newRoom:true
-        })
     }
 
     createRoom(e) {
         e.preventDefault();
         const roomName = window.prompt('Enter Room Name');
+        this.setState({
+            update:true,
+            messages: [{
+                text: 'Welcome to the new chat room -',
+                senderId: ''
+            }]
+        });
         this.props.dispatch({
             type: 'GET_CREATE_ROOM',
             currentUser: this.props.currentUser,
             roomName
         });
+        
     }
 
     onRoomUpdate(id){
-        this.setState({
-            roomId : parseInt(id,10) || 16070852,
+        this.props.dispatch({
+            type: 'UPDATE_ROOM_ID',
+            roomId: parseInt(id,10),
         });
 
-        this.props.dispatch({
-            type: 'GET_CHAT',
-            roomId: parseInt(id,10) || 16070852,
-            currentUser: this.props.currentUser,
+        this.setState({
+            update:true,
+            messages: [{
+                text: 'Welcome to the new chat room -',
+                senderId: ''
+            }]
         });
+    }
+
+    loadMsg(currentUser, roomId) {
+        console.log('here', this.props.roomId , roomId)
+        return currentUser.subscribeToRoom({
+            roomId: roomId,
+            hooks: {
+                onNewMessage: message => {
+                    this.setState({
+                        messages: [...this.state.messages, message],
+                      })
+                }
+            },messageLimit: 5
+            })
     }
 
     render() {
         const currentUser = this.props.currentUser || {};
         const users = currentUser ? currentUser.users : [];
-        const messages = this.props.messages || [];
         const rooms = currentUser ? currentUser.rooms : [];
         const currentUserId = currentUser ? currentUser.id : '';
-        if(users && users.length && (this.state.update === true || this.state.newRoom === true ) ){
-            this.props.dispatch({
-                type: 'GET_CHAT',
-                roomId: this.props.roomId ? this.props.roomId : 16070852,
-                currentUser: this.props.currentUser
-            });
+        const roomId = this.props.roomId || 16070852;
 
+        if(currentUser && currentUser.subscribeToRoom && (this.state.update === true && roomId !== this.state.roomId)) {
+            this.loadMsg(currentUser, roomId);
             this.setState({
                 update:false,
-                newRoom: false
+                roomId: roomId
             });
         }
 
@@ -143,7 +151,7 @@ class ChattingSection extends Component {
                         <div  ref='scroll' style={styles.chatWindow}>
                             <ChatWindow
                                 currentUserId = {currentUserId}
-                                messages={messages}
+                                messages={this.state.messages}
                             />
                         </div>
                             <SendMessageForm 
@@ -163,7 +171,7 @@ class ChattingSection extends Component {
                         </Button>
                         <RoomsList
                             onRoomUpdate = {this.onRoomUpdate.bind(this)}
-                            currentRoomId={this.props.roomId}
+                            currentRoomId={this.state.roomId}
                             rooms={rooms}
                         />
                         <UsersList
@@ -178,7 +186,6 @@ class ChattingSection extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    messages: state.messages,
     currentUser: state.currentUser,
     roomId: state.roomId
 });
