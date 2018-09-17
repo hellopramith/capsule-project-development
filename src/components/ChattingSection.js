@@ -54,7 +54,7 @@ class ChattingSection extends Component {
                 senderId: ''
             }],
             update: true,
-            roomId: 16070852
+            roomId: ''
         }
 
         this.sendMessage = this.sendMessage.bind(this);
