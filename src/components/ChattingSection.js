@@ -70,7 +70,7 @@ class ChattingSection extends Component {
     sendMessage(text) {
         this.props.currentUser.sendMessage({
             text,
-            roomId: this.props.roomId ?this.props.roomId : 16070852
+            roomId: this.props.roomId ?this.props.roomId : 16408493
         })
     }
 
@@ -133,7 +133,7 @@ class ChattingSection extends Component {
         const users = currentUser ? currentUser.users : [];
         const rooms = currentUser ? currentUser.rooms : [];
         const currentUserId = currentUser ? currentUser.id : '';
-        const roomId = this.props.roomId || 16070852;
+        const roomId = this.props.roomId || 16408493;
 
         if(currentUser && currentUser.subscribeToRoom && (this.state.update === true && roomId !== this.state.roomId)) {
             this.loadMsg(currentUser, roomId);

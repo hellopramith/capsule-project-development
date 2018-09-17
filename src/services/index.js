@@ -32,7 +32,7 @@ export function getCurrentUser(username) {
         if(currentUser.users.length > 0){
             resolve(currentUser)
         } else {
-            currentUser.joinRoom({ roomId: 16070852 })
+            currentUser.joinRoom({ roomId: 16408493 })
             .then(room => {
                 console.log(`Joined room with ID: ${room.id}`)
                 currentUser.messages = [{
