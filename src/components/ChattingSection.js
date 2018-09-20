@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import ChatWindow from './ChatWindow';
 import UsersList from './UsersList';
 import RoomsList from './RoomsList';
+import CreateRoom from './CreateRoom';
 import SendMessageForm from './SendMessageForm';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
 import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
 import Chat from '@material-ui/icons/Chat';
 import Grid from '@material-ui/core/Grid';
@@ -20,11 +20,6 @@ const styles = {
         border: '1px solid #ddd',
         padding: '12px'
     },
-    button : {
-        background: '#2196f3',
-        color: '#fff',
-        marginBottom: '12px'
-    },
     buttonLogout : {
         color: '#f50057',
         marginBottom: '12px'
@@ -33,15 +28,17 @@ const styles = {
         fontSize: '50px',
         color: '#2196f3',
         margin: '0 0 60px'
-    }
+    },
   };
+
+
 
 class ChattingSection extends Component {
     static propTypes = {
         dispatch: PropTypes.func.isRequired,
         currentUser: PropTypes.object,
         currentRoom:  PropTypes.object,
-        messages: PropTypes.array
+        messages: PropTypes.array,
       };
 
     constructor (props) {
@@ -54,10 +51,11 @@ class ChattingSection extends Component {
                 senderId: ''
             }],
             update: true,
-            roomId: ''
+            roomId: '',
         }
 
         this.sendMessage = this.sendMessage.bind(this);
+        this.handleCreateRoom = this.handleCreateRoom.bind(this);
     }
 
     logOut(e) {
@@ -74,27 +72,26 @@ class ChattingSection extends Component {
         })
     }
 
-    componentDidMount () {
-        this.props.dispatch({
-            type: 'GET_CURRENT_USER',
-            currentUser: this.props.username
-        });
-    }
-
-    createRoom(e) {
-        e.preventDefault();
-        const roomName = window.prompt('Enter Room Name');
+    handleCreateRoom(roomName,addUserIds){
         this.setState({
             update:true,
             messages: [{
                 text: 'Welcome to the new chat room -',
                 senderId: ''
-            }]
+            }],
         });
         this.props.dispatch({
             type: 'GET_CREATE_ROOM',
             currentUser: this.props.currentUser,
-            roomName
+            roomName,
+            addUserIds
+        });
+    }
+
+    componentDidMount () {
+        this.props.dispatch({
+            type: 'GET_CURRENT_USER',
+            currentUser: this.props.username
         });
         
     }
@@ -115,7 +112,6 @@ class ChattingSection extends Component {
     }
 
     loadMsg(currentUser, roomId) {
-        console.log('here', this.props.roomId , roomId)
         return currentUser.subscribeToRoom({
             roomId: roomId,
             hooks: {
@@ -130,23 +126,23 @@ class ChattingSection extends Component {
 
     render() {
         const currentUser = this.props.currentUser || {};
-        const users = currentUser ? currentUser.users : [];
-        const rooms = currentUser ? currentUser.rooms : [];
-        const currentUserId = currentUser ? currentUser.id : '';
+        const users = Object.keys(currentUser).length ? currentUser.users : [];
+        const rooms = Object.keys(currentUser).length ? currentUser.rooms : [];
+        const currentUserId = Object.keys(currentUser).length ? currentUser.id : '';
         const roomId = this.props.roomId || 16408493;
-
         if(currentUser && currentUser.subscribeToRoom && (this.state.update === true && roomId !== this.state.roomId)) {
             this.loadMsg(currentUser, roomId);
             this.setState({
                 update:false,
-                roomId: roomId
+                roomId: roomId,
+                currentUserId: currentUserId,
+                open: false
             });
         }
 
         return (
             <React.Fragment>
                 <Grid container spacing={24}>
-
                     <Grid item xs={8}>
                         <div  ref='scroll' style={styles.chatWindow}>
                             <ChatWindow
@@ -154,17 +150,15 @@ class ChattingSection extends Component {
                                 messages={this.state.messages}
                             />
                         </div>
-                            <SendMessageForm 
-                                onSubmit={this.sendMessage}
-                            />
-
+                        <SendMessageForm 
+                            onSubmit={this.sendMessage}
+                        />
                     </Grid>
                     <Grid item xs={4}>
                         <Typography variant="title" style={styles.logo} color="inherit">capsule-chat <Chat style={styles.logo}/></Typography>
-                        <Button style={styles.button} onClick={this.createRoom.bind(this)} variant="extendedFab" aria-label="Create Room">
-                            <AddIcon />
-                            Create Room
-                        </Button>
+
+                        <CreateRoom  currentUser={currentUser} onCreateRoom={this.handleCreateRoom} />
+
                         <Button style={styles.buttonLogout} onClick={this.logOut.bind(this)}>
                             <PowerSettingsNew />
                             Logout

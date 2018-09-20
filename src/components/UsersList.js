@@ -46,7 +46,7 @@ const styles = {
 class UsersList extends Component {
 
   render() {
-    if (this.props.users) {
+    if (this.props.users.length) {
       return  <div><Typography>User List</Typography><List component="nav"  style={styles.userList}>
         {this.props.users.map((user, index) => {
           if (user.id === this.props.currentUser.id) {

@@ -10,7 +10,8 @@ export function getUserName(username) {
 export function getCreateRoom(action) {
     return action.currentUser.createRoom({
         name: action.roomName,
-        private: false
+        private: false,
+        addUserIds: action.addUserIds
     })
     .then(room => new Promise((resolve, reject) => {
         alert(`Created room called ${room.name}`);
