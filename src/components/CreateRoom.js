@@ -29,6 +29,14 @@ const styles = {
     },
     formControl : {
         width: '200px'
+    },
+    buttonCreate : {
+        background: '#2196f3',
+        color: '#fff',
+        marginLeft: '12px'
+    },
+    error : {
+        color: 'red'
     }
   };
 
@@ -53,6 +61,7 @@ PaperProps: {
       transform: `translate(-${top}%, -${left}%)`,
       position: 'absolute',
       width:  '500px',
+      maxWidth: '90%',
       backgroundColor: '#fff',
       padding: '20px'
     };
@@ -82,10 +91,16 @@ class CreateRoom extends Component {
 
     handleCreateRoom(e) {
         e.preventDefault();
-        this.props.onCreateRoom(this.state.newRoomName,this.state.name);
-        this.setState({
-            open : false
-        });
+        if (this.state.newRoomName) {
+            this.props.onCreateRoom(this.state.newRoomName,this.state.name);
+            this.setState({
+                open : false
+            });
+        } else {
+            this.setState({
+                error : 'Room Name cant be empty'
+            });
+        }
     }
 
     handleNewRoomName(e) {
@@ -97,11 +112,11 @@ class CreateRoom extends Component {
 
     createRoomCloseModal = () => {
         this.setState({ open: false });
-      };
+    };
 
-      handleSelectChange = event => {
+    handleSelectChange = event => {
         this.setState({ name: event.target.value });
-      };
+    };
 
     render() {
         const currentUser = this.props.currentUser || {};
@@ -126,7 +141,7 @@ class CreateRoom extends Component {
                         Create Room
                         </Typography>
                         <Typography variant="subheading" id="simple-modal-description">
-                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                            Enter Room Name & select users to the new room
                         </Typography>
 
 
@@ -152,16 +167,18 @@ class CreateRoom extends Component {
                             </Select>
                         </FormControl>
                         <br/>
-                        <FormControl>
+                        <FormControl style={styles.formControl}>
+                            <InputLabel htmlFor="new-room-name">Enter new room name</InputLabel>
                             <Input
+                                id="new-room-name"
                                 placeholder="Enter new room name"
                                 onChange={this.handleNewRoomName.bind(this)}
                                 value={this.state.newRoomName} />
                             {this.state.error &&
-                            <FormHelperText id="name-error-text">{this.state.error}</FormHelperText>
+                                <FormHelperText style={styles.error} id="name-error-text">{this.state.error}</FormHelperText>
                             }
                         </FormControl>
-                        <Button variant="contained" onClick={this.handleCreateRoom.bind(this)}>
+                        <Button style={styles.buttonCreate} variant="contained" onClick={this.handleCreateRoom.bind(this)}>
                             Create Room
                         </Button>
                     </div>
